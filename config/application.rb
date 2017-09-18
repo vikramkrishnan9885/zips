@@ -1,3 +1,4 @@
+require "active_record/railtie"
 require_relative 'boot'
 
 require 'rails/all'
@@ -14,5 +15,18 @@ module Zips
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+
+    # Bootstraps mongoid within application -- like rails console
+    Mongoid.load!('./config/mongoid.yml')
+
+    # Specify which default ORM are we using with scaffold
+    # add --orm none, mongoid, or active_record
+    # to rails generate cmd line to be specific
+    config.generators {|g| g.orm:active_record}
+
+    # Do not swallow errors in after_commit/after_rollback callbacks
+    #config.active_record.raise_in_transactional_callbacks = true
+    
   end
 end
